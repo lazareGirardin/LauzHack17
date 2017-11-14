@@ -70,6 +70,7 @@ body {
       <p id="details"></p>
       <p id="infos"></p>
       <p id="cost"></p>
+      <p id="cityData"></p>
       <div id="option">
             <input name="SupriseMe" 
            type="button" 
@@ -106,7 +107,7 @@ body {
 
         svg.call(zoom);
 
-        var highlight = Array(181).fill(0)
+        var highlight = Array(189).fill(0)
 
         var colors = d3.scale.linear()
         .domain([0, 181])  
@@ -118,63 +119,75 @@ body {
             }
         );
 
+        var heritage;
+
         d3.csv("/dataframes/heritage", function(error, data) {
-            var heritage = data;
+            heritage = data;
             }
         );
 
+        var museums;
         d3.csv("/dataframes/museums", function(error, data) {
-            var museums = data;
+            museums = data;
             }
         );
 
+        var parks_percent;
         d3.csv("/dataframes/parks_percent", function(error, data) {
-            var parks_percent = data;
+            parks_percent = data;
             }
         );
 
+        var restau_per_ca;
         d3.csv("/dataframes/restau_per_ca", function(error, data) {
-            var restau_per_ca = data;
+            restau_per_ca = data;
             }
         );
 
+        var tourist_per_cent;
         d3.csv("/dataframes/tourist_per_cent", function(error, data) {
-            var tourist_per_cent = data;
+            tourist_per_cent = data;
             }
         );
 
-        var bars=[];
+        var bars;
         d3.csv("/dataframes/bars", function(error, data) {
-            bars.push(data[0]);
+            bars = data;
             }
         );
 
+        var nightclubs;
         d3.csv("/dataframes/nightclubs", function(error, data) {
-            var nightclubs = data;
+            nightclubs = data;
             }
         );
 
+        var bars_percent;
         d3.csv("/dataframes/bars_percent", function(error, data) {
-            var bars_percent = data;
+            bars_percent = data;
+            /*for(i in bars_percent){
+                console.log(bars_percent[i]["0"]);
+               }*/
             }
         );
 
+        var arcades;
         d3.csv("/dataframes/arcades", function(error, data) {
-            var arcades = data;
-            //for(i in arcades){
-                //console.log(arcades[i]["0"] + " and " + arcades[i]["0.0"]);
-               // }
+            arcades = data;
+            // for(i in arcades){
+            //     console.log(arcades[i]["0"] + " and " + arcades[i]["0.0"]);
+            //    }
             }
         );
 
 
-d3.csv("/dataframes/temps", function(error, data) {
-    var temps = data;
-    // for(i in temps){
-    //     console.log(temps[i]["id"] + " and " + temps[i]["temp"]);
-    //     }
-    }
-);
+        d3.csv("/dataframes/temps", function(error, data) {
+            var temps = data;
+            // for(i in temps){
+            //     console.log(temps[i]["id"] + " and " + temps[i]["temp"]);
+            //     }
+            }
+        );
 
         //https://github.com/johan/world.geo.json
         d3.json("/alljson", function(error, data) {
@@ -202,6 +215,7 @@ d3.csv("/dataframes/temps", function(error, data) {
                     .on("click", function(d, i) {
                         cost(d);
                         details(d);
+                        cityDetails(d, i);
                     })
                     .attr("fill", function(d, i){
                         if (highlight[i] == true){
@@ -243,6 +257,7 @@ d3.csv("/dataframes/temps", function(error, data) {
                 d3.json("/cost/" + x.name, function(error, data) {
                     d3.csv("/dataframes/unesco", function(error, _unesco) {
                        
+                            console.log(bars_percent.length)
                             var unesco = _unesco;
                             //var names = data[0];
                             d3.select("#cost").html(function(){
@@ -269,6 +284,14 @@ d3.csv("/dataframes/temps", function(error, data) {
                         });
                     });
 
+            }
+
+            function cityDetails(x, idx){
+                d3.select("#cityData").html(function(){
+                    console.log(idx);
+                    //return bars_percent[idx+1]["0.0"];
+                    return bars_percent[idx]["0"];
+                });
             }
 
         });
@@ -374,6 +397,8 @@ d3.csv("/dataframes/temps", function(error, data) {
             highlight[45] = 1;
             highlight[67] = 1;
             highlight[68] = 1;
+
+            console.log(heritage);
 
             idxArray = getAllIndexes(highlight);
             console.log(idxArray);
