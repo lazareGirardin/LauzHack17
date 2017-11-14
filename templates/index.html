@@ -2,6 +2,15 @@
 <html>
 <style>
 
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
 path {
   stroke: rgba(255, 255, 255, 0.9);
   stroke-width: .1px;
@@ -71,6 +80,7 @@ body {
       <p id="infos"></p>
       <p id="cost"></p>
       <p id="cityData"></p>
+      <div class="chart"></div>
       <div id="option">
             <input name="SupriseMe" 
            type="button" 
@@ -264,7 +274,7 @@ body {
             function details(x) {
             	d3.select("#details").text(function() {
             		return x.name;
-            	})
+            	});
             }
             function cost(x) {
                 d3.select("#cost").text(function(){
@@ -273,7 +283,7 @@ body {
                 d3.json("/cost/" + x.name, function(error, data) {
                     d3.csv("/dataframes/unesco", function(error, _unesco) {
                        
-                            console.log(bars_percent.length)
+                            //console.log(bars_percent.length)
                             var unesco = _unesco;
                             //var names = data[0];
                             d3.select("#cost").html(function(){
@@ -296,18 +306,38 @@ body {
                                 //namePrice += "<br/ "
 
                                 return namePrice;
-                                })
+                            })
                         });
                     });
 
             }
 
             function cityDetails(x, idx){
-                d3.select("#cityData").html(function(){
-                    console.log(idx);
-                    //return bars_percent[idx+1]["0.0"];
-                    return bars_percent[idx]["0"];
-                });
+                var results = "No bar information available";
+                var res_value = [10, 20, 50];
+                //d3.select("#cityData").html(function(){
+                    //console.log(idx);
+                    bars.forEach(function(bar, bar_idx){
+                        if(x.id == bar.id){
+                            //console.log(bar.Figure);
+                            results = bar.Figure;
+                            //res_value = +bar.Figure;
+                            //return bar.Figure;
+                        }
+                    })
+                    var x_axis = d3.scale.linear()
+                    .domain([0, d3.max(res_value)])
+                    .range([0, 200]);
+
+                    d3.select(".chart")
+                    .selectAll("div")
+                    .data(res_value)
+                    .enter().append("div")
+                    .style("width", function(d) { return x_axis(d) + "px"; })
+                    .text(function(d) { return d; });
+                    //return results;
+                //});
+
             }
 
         });
