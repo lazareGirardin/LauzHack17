@@ -336,11 +336,13 @@ body {
                     //else {
                          //return 0.2;   
                     //}
-                });
+                })
+                .attr("fill", "red");
 
                 } else {
                      svg.selectAll("path")
-                      .attr("opacity", 0.6); 
+                      .attr("opacity", 0.6)
+                      .attr("fill", colors(0)); 
                       highlight.fill(0);   
                 } 
             });    
