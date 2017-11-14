@@ -79,8 +79,6 @@ body {
       <p id="details"></p>
       <p id="infos"></p>
       <p id="cost"></p>
-      <p id="cityData"></p>
-      <div class="chart"></div>
       <div id="option">
             <input name="SupriseMe" 
            type="button" 
@@ -92,6 +90,7 @@ body {
            <input type="checkbox" class="myCheckbox" value="spiderman"> Nightlife
            <input type="checkbox" class="myCheckbox" value="superman"> Culture
       </div>
+      <div class="chart"></div>
     </div>
     <div id="map" class=flex-item> 
       <script type="text/javascript">
@@ -126,10 +125,14 @@ body {
 
         var unesco, heritage, museums, parks_percent, restau_per_ca, tourist_per_cent, bars, nightclubs, bars_percent, arcades, temps;
 
+        var maxs = new Array(11).fill(0);  
         d3.csv("/dataframes/unesco", function(error, data) {
             unesco = data;
             for(i in unesco){
-            console.log("unesco " + unesco[i]["id"] + " and " + unesco[i]["Figure"]);
+                console.log("unesco " + +unesco[i]["id"] + " and " + unesco[i]["Figure"]);
+                if(+unesco[i]['Figure'] > maxs[0]){
+                    maxs[0] = +unesco[i]['Figure'];
+                    }
                 }
             }
         );
@@ -137,7 +140,11 @@ body {
         d3.csv("/dataframes/heritage", function(error, data) {
             heritage = data;
             for(i in heritage){
-            console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
+                console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
+                if(+heritage[i]['Figure'] > maxs[1]){
+                    maxs[1] = +heritage[i]['Figure'];
+                    console.log("new max" + maxs[1]);
+                    }
                 }    
             }
         );
@@ -178,6 +185,9 @@ body {
             bars = data;
             for(i in bars){
                 console.log("bars " + bars[i]["id"] + " and " + bars[i]["Figure"]);
+                if(+bars[i]['Figure'] > maxs[6]){
+                    maxs[6] = +bars[i]['Figure'];
+                    }                    
                 }
             }
         );
@@ -186,6 +196,10 @@ body {
             nightclubs = data;
             for(i in nightclubs){
                 console.log("nightclubs " + nightclubs[i]["id"] + " and " + nightclubs[i]["Figure"]);
+                if(+nightclubs[i]['Figure'] > maxs[7]){
+                    maxs[7] = +nightclubs[i]['Figure'];
+                    }                    
+                
                 }
             }
         );
@@ -313,28 +327,59 @@ body {
             }
 
             function cityDetails(x, idx){
-                var results = "No bar information available";
+                var names = ['bars', 'nightclubs', 'heritages']
+                console.log("max is : " + maxs);
+                var results = new Array(11).fill(0)
                 var res_value = [10, 20, 50];
                 //d3.select("#cityData").html(function(){
                     //console.log(idx);
                     bars.forEach(function(bar, bar_idx){
-                        if(x.id == bar.id){
-                            //console.log(bar.Figure);
-                            results = bar.Figure;
-                            //res_value = +bar.Figure;
-                            //return bar.Figure;
-                        }
+                        if(x.id == bar.id){results[6] = bar.Figure; console.log("bars " + bar.Figure);}
                     })
-                    var x_axis = d3.scale.linear()
-                    .domain([0, d3.max(res_value)])
-                    .range([0, 200]);
+                    nightclubs.forEach(function(night){
+                        if(x.id == night.id){results[7] = night.Figure; console.log("night " + night.Figure);}
+                    })
+                    heritage.forEach(function(heri, heri_idx){
+                        if(x.id == heri.id){results[1] = heri.Figure; console.log("heri " + heri.Figure);}
+                    })
+
+                    // var x_axis = [];
+
+                    // for (var i = 0; i < maxs.length; i++) {
+                    // var x_temp = d3.scale.linear()
+                    //             .domain([0, d3.max(maxs[i])])
+                    //             .range([0, 200]);                        
+                    //     x_axis.push(x_temp);
+                    // }
+
+                    //console.log(results[1]);
+                    d3.select(".chart")
+                    .selectAll("div")
+                    .data(results)
+                    .enter().append("div")
+                    .style("width", function(d, i) {  
+                         var x_temp = d3.scale.linear()
+                                .domain([0, maxs[i]])  
+                                .range([0, 200]);
+                        console.log(x_temp(d));
+                        console.log(i);
+                        console.log(maxs[i]);
+                        return x_temp(d) + "px"; })
+                    .text(function(d, i) { return d + " " + names[i]; })
 
                     d3.select(".chart")
                     .selectAll("div")
-                    .data(res_value)
-                    .enter().append("div")
-                    .style("width", function(d) { return x_axis(d) + "px"; })
-                    .text(function(d) { return d; });
+                    .data(results)
+                    //.enter().append("div")
+                    .style("width", function(d, i) {  
+                         var x_temp = d3.scale.linear()
+                                .domain([0, maxs[i]])  
+                                .range([0, 200]);
+                        console.log(x_temp(d));
+                        console.log(i);
+                        console.log(maxs[i]);
+                        return x_temp(d) + "px"; })
+                    .text(function(d, i) { return d + " " + names[i]; });
                     //return results;
                 //});
 
