@@ -23,68 +23,55 @@ def main():
 def load_all():
 	return jsonify(alljson)
 
+@app.route("/dataframes/bars")
+def load_bars():
+	bars = pickle.load(open('pickles/bars_df.pkl', 'rb'))
+	return bars.to_csv()
 
 @app.route("/dataframes/unesco")
 def load_unesco():
 	unesco = pickle.load(open('pickles/unesco_df.pkl', 'rb'))
-	full = pd.merge(ids, unesco, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return unesco.to_csv()
 
 @app.route("/dataframes/heritage")
 def load_heritage():
 	heritage = pickle.load(open('pickles/heritage_df.pkl', 'rb'))
-	full = pd.merge(ids, heritage, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return heritage.to_csv()
 
 @app.route("/dataframes/museums")
 def load_museums():
 	museums = pickle.load(open('pickles/museums_df.pkl', 'rb'))
-	full = pd.merge(ids, museums, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return museums.to_csv()
 
 @app.route("/dataframes/parks_percent")
 def load_parks_percent():
 	parks_percent = pickle.load(open('pickles/parks_percent_df.pkl', 'rb'))
-	full = pd.merge(ids, parks_percent, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return parks_percent.to_csv()	
 
 @app.route("/dataframes/restau_per_ca")
 def load_restau_per_ca():
 	restau_per_ca = pickle.load(open('pickles/restau_per_ca_df.pkl', 'rb'))
-	full = pd.merge(ids, restau_per_ca, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return restau_per_ca.to_csv()
 
 @app.route("/dataframes/tourist_per_cent")
 def load_tourist_per_cent():
 	tourist_per_cent = pickle.load(open('pickles/tourist_per_cent_df.pkl', 'rb'))
-	full = pd.merge(ids, tourist_per_cent, how='outer').fillna(0)
-	return full['Figure'].to_csv()
-	
-@app.route("/dataframes/bars")
-def load_bars():
-	bars = pickle.load(open('pickles/bars_df.pkl', 'rb'))
-	full = pd.merge(ids, bars, how='outer').fillna(0)
-	return full['Figure'].to_csv()
-
-@app.route("/dataframes/nightclubs")
-def load_nightclubs():
-	nightclubs = pickle.load(open('pickles/nightclubs_df.pkl', 'rb'))
-	full = pd.merge(ids, nightclubs, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return tourist_per_cent.to_csv()
 
 @app.route("/dataframes/bars_percent")
 def load_bars_percent():
 	bars_percent = pickle.load(open('pickles/bars_percent_df.pkl', 'rb'))
-	full = pd.merge(ids, bars_percent, how='outer').fillna(0)
-	return full['Figure'].to_csv()
+	return bars_percent.to_csv()
 
+@app.route("/dataframes/nightclubs")
+def load_nightclubs():
+	nightclubs = pickle.load(open('pickles/nightclubs_df.pkl', 'rb'))
+	return nightclubs.to_csv()
 
 @app.route("/dataframes/arcades")
 def load_arcades():
 	arcades = pickle.load(open('pickles/arcades_df.pkl', 'rb'))
-	full = pd.merge(ids, arcades, how='outer').fillna(0)
-	return full['Figure'].to_csv()
-	
+	return arcades.to_csv()
 
 @app.route("/dataframes/temps")
 def load_temps():
