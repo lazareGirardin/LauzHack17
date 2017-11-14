@@ -114,69 +114,85 @@ body {
         .range(["steelblue", "steelblue"]);
 
 
+        var unesco, heritage, museums, parks_percent, restau_per_ca, tourist_per_cent, bars, nightclubs, bars_percent, arcades, temps;
+
         d3.csv("/dataframes/unesco", function(error, data) {
-            var unesco = data;
+            unesco = data;
+            for(i in unesco){
+            console.log("unesco " + unesco[i]["id"] + " and " + unesco[i]["Figure"]);
+                }
             }
         );
-
-        var heritage;
 
         d3.csv("/dataframes/heritage", function(error, data) {
             heritage = data;
+            for(i in heritage){
+            console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
+                }    
             }
         );
 
-        var museums;
         d3.csv("/dataframes/museums", function(error, data) {
             museums = data;
+            for(i in museums){
+            console.log("museums " + museums[i]["id"] + " and " + museums[i]["Figure"]);
+                }  
             }
         );
 
-        var parks_percent;
         d3.csv("/dataframes/parks_percent", function(error, data) {
             parks_percent = data;
+            for(i in parks_percent){
+            console.log("parks_percent " + parks_percent[i]["id"] + " and " + parks_percent[i]["Figure"]);
+                }  
             }
         );
 
-        var restau_per_ca;
         d3.csv("/dataframes/restau_per_ca", function(error, data) {
             restau_per_ca = data;
+            for(i in restau_per_ca){
+            console.log("restau_per_ca " + restau_per_ca[i]["id"] + " and " + restau_per_ca[i]["Figure"]);
+                }  
             }
         );
 
-        var tourist_per_cent;
         d3.csv("/dataframes/tourist_per_cent", function(error, data) {
             tourist_per_cent = data;
+            for(i in tourist_per_cent){
+            console.log("tourist_per_cent " + tourist_per_cent[i]["id"] + " and " + tourist_per_cent[i]["Figure"]);
+                } 
             }
         );
 
-        var bars;
         d3.csv("/dataframes/bars", function(error, data) {
             bars = data;
+            for(i in bars){
+                console.log("bars " + bars[i]["id"] + " and " + bars[i]["Figure"]);
+                }
             }
         );
 
-        var nightclubs;
         d3.csv("/dataframes/nightclubs", function(error, data) {
             nightclubs = data;
+            for(i in nightclubs){
+                console.log("nightclubs " + nightclubs[i]["id"] + " and " + nightclubs[i]["Figure"]);
+                }
             }
         );
 
-        var bars_percent;
         d3.csv("/dataframes/bars_percent", function(error, data) {
             bars_percent = data;
-            /*for(i in bars_percent){
-                console.log(bars_percent[i]["0"]);
-               }*/
+            for(i in bars_percent){
+                console.log("bars_percent " + bars_percent[i]["id"] + " and " + bars_percent[i]["Figure"]);
+                }
             }
         );
 
-        var arcades;
         d3.csv("/dataframes/arcades", function(error, data) {
             arcades = data;
-            // for(i in arcades){
-            //     console.log(arcades[i]["0"] + " and " + arcades[i]["0.0"]);
-            //    }
+            for(i in arcades){
+                console.log("arcades" + arcades[i]["id"] + " and " + arcades[i]["Figure"]);
+                }
             }
         );
 
