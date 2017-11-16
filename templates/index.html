@@ -4,11 +4,11 @@
 
 .chart div {
   font: 10px sans-serif;
-  background-color: steelblue;
+  background-color: rgba(0, 0, 255, 0.3);
   text-align: right;
   padding: 3px;
   margin: 1px;
-  color: white;
+  color: black;
 }
 
 path {
@@ -122,103 +122,139 @@ body {
         .domain([0, 181])  
         .range(["steelblue", "steelblue"]);
 
-
         var unesco, heritage, museums, parks_percent, restau_per_ca, tourist_per_cent, bars, nightclubs, bars_percent, arcades, temps;
 
-        var maxs = new Array(11).fill(0);  
-        d3.csv("/dataframes/unesco", function(error, data) {
-            unesco = data;
-            for(i in unesco){
-                console.log("unesco " + +unesco[i]["id"] + " and " + unesco[i]["Figure"]);
-                if(+unesco[i]['Figure'] > maxs[0]){
-                    maxs[0] = +unesco[i]['Figure'];
-                    }
-                }
-            }
-        );
+        dict_infos = {  'unesco':           {"idx" : 0, "values" : unesco} ,
+                        'heritage':         {"idx" : 1, "values" : heritage}, 
+                        'museums':          {"idx" : 2, "values" : museums}, 
+                        'parks_percent':    {"idx" : 3, "values" : parks_percent}, 
+                        'restau_per_ca':    {"idx" : 4, "values" : restau_per_ca}, 
+                        'tourist_per_cent': {"idx" : 5, "values" : tourist_per_cent}, 
+                        'bars':             {"idx" : 6, "values" : bars_percent}, 
+                        'nightclubs':       {"idx" : 7, "values" : nightclubs}, 
+                        'bars_percent':     {"idx" : 8, "values" : bars_percent}, 
+                        'arcades':          {"idx" : 9, "values" : arcades}
+                     };
 
-        d3.csv("/dataframes/heritage", function(error, data) {
-            heritage = data;
-            for(i in heritage){
-                console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
-                if(+heritage[i]['Figure'] > maxs[1]){
-                    maxs[1] = +heritage[i]['Figure'];
-                    console.log("new max" + maxs[1]);
-                    }
-                }    
-            }
-        );
+        //console.log("length of dict : " + Object.keys(dict_infos).length);
+        var names = Object.keys(dict_infos);
+        var maxs = new Array(11).fill(0); 
 
-        d3.csv("/dataframes/museums", function(error, data) {
-            museums = data;
-            for(i in museums){
-            console.log("museums " + museums[i]["id"] + " and " + museums[i]["Figure"]);
-                }  
-            }
-        );
+        for (key in dict_infos){
+            load_and_store(key);
+        }
+ 
+        // d3.csv("/dataframes/unesco", function(error, data) {
+        //     dict_infos["unesco"].values = data;
+        //     unesco = data;
+        //     for(i in unesco){
+        //         console.log("unesco " + unesco[i]["id"] + " and " + unesco[i]["Figure"]);
+        //         if(+unesco[i]['Figure'] > maxs[dict_infos["unesco"].idx]){
+        //             maxs[dict_infos["unesco"].idx] = +unesco[i]['Figure'];
+        //             }
+        //         }
+        //     }
+        // );
 
-        d3.csv("/dataframes/parks_percent", function(error, data) {
-            parks_percent = data;
-            for(i in parks_percent){
-            console.log("parks_percent " + parks_percent[i]["id"] + " and " + parks_percent[i]["Figure"]);
-                }  
-            }
-        );
+        // d3.csv("/dataframes/heritage", function(error, data) {
+        //     heritage = data;
+        //     for(i in heritage){
+        //         console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
+        //         if(+heritage[i]['Figure'] > maxs[dict_infos["heritage"].idx]){
+        //             maxs[dict_infos["heritage"].idx] = +heritage[i]['Figure'];
+        //             }
+        //         }    
+        //     }
+        // );
 
-        d3.csv("/dataframes/restau_per_ca", function(error, data) {
-            restau_per_ca = data;
-            for(i in restau_per_ca){
-            console.log("restau_per_ca " + restau_per_ca[i]["id"] + " and " + restau_per_ca[i]["Figure"]);
-                }  
-            }
-        );
+        // d3.csv("/dataframes/museums", function(error, data) {
+        //     museums = data;
+        //     for(i in museums){
+        //         console.log("museums " + museums[i]["id"] + " and " + museums[i]["Figure"]);
+        //         if(+museums[i]['Figure'] > maxs[dict_infos["museums"].idx]){
+        //             maxs[dict_infos["museums"].idx] = +museums[i]['Figure'];
+        //             }
+        //     }  
+        //     }
+        // );
 
-        d3.csv("/dataframes/tourist_per_cent", function(error, data) {
-            tourist_per_cent = data;
-            for(i in tourist_per_cent){
-            console.log("tourist_per_cent " + tourist_per_cent[i]["id"] + " and " + tourist_per_cent[i]["Figure"]);
-                } 
-            }
-        );
+        // d3.csv("/dataframes/parks_percent", function(error, data) {
+        //     parks_percent = data;
+        //     for(i in parks_percent){
+        //         console.log("parks_percent " + parks_percent[i]["id"] + " and " + parks_percent[i]["Figure"]);
+        //         if(+parks_percent[i]['Figure'] > maxs[dict_infos["parks_percent"].idx]){
+        //             maxs[dict_infos["parks_percent"].idx] = +parks_percent[i]['Figure'];
+        //             }
+        //         }  
+        //     }
+        // );
 
-        d3.csv("/dataframes/bars", function(error, data) {
-            bars = data;
-            for(i in bars){
-                console.log("bars " + bars[i]["id"] + " and " + bars[i]["Figure"]);
-                if(+bars[i]['Figure'] > maxs[6]){
-                    maxs[6] = +bars[i]['Figure'];
-                    }                    
-                }
-            }
-        );
 
-        d3.csv("/dataframes/nightclubs", function(error, data) {
-            nightclubs = data;
-            for(i in nightclubs){
-                console.log("nightclubs " + nightclubs[i]["id"] + " and " + nightclubs[i]["Figure"]);
-                if(+nightclubs[i]['Figure'] > maxs[7]){
-                    maxs[7] = +nightclubs[i]['Figure'];
-                    }                    
-                
-                }
-            }
-        );
+        // d3.csv("/dataframes/restau_per_ca", function(error, data) {
+        //     restau_per_ca = data;
+        //     for(i in restau_per_ca){
+        //         console.log("restau_per_ca " + restau_per_ca[i]["id"] + " and " + restau_per_ca[i]["Figure"]);
+        //         if(+restau_per_ca[i]['Figure'] > maxs[dict_infos["restau_per_ca"].idx]){
+        //             maxs[dict_infos["restau_per_ca"].idx] = +restau_per_ca[i]['Figure'];
+        //             }
+        //         }  
+        //     }
+        // );
 
-        d3.csv("/dataframes/bars_percent", function(error, data) {
-            bars_percent = data;
-            for(i in bars_percent){
-                console.log("bars_percent " + bars_percent[i]["id"] + " and " + bars_percent[i]["Figure"]);
-                }
-            }
-        );
+        // d3.csv("/dataframes/tourist_per_cent", function(error, data) {
+        //     tourist_per_cent = data;
+        //     for(i in tourist_per_cent){
+        //         console.log("tourist_per_cent " + tourist_per_cent[i]["id"] + " and " + tourist_per_cent[i]["Figure"]);
+        //         if(+tourist_per_cent[i]['Figure'] > maxs[dict_infos["tourist_per_cent"].idx]){
+        //             maxs[dict_infos["tourist_per_cent"].idx] = +tourist_per_cent[i]['Figure'];
+        //             }
+        //         }
+        //     }
+        // );
 
-        d3.csv("/dataframes/arcades", function(error, data) {
-            arcades = data;
-            for(i in arcades){
-                console.log("arcades" + arcades[i]["id"] + " and " + arcades[i]["Figure"]);
-                }
-            }
-        );
+        // d3.csv("/dataframes/bars", function(error, data) {
+        //     bars = data;
+        //     for(i in bars){
+        //         console.log("bars " + bars[i]["id"] + " and " + bars[i]["Figure"]);
+        //         if(+bars[i]['Figure'] > maxs[dict_infos["bars"].idx]){
+        //             maxs[dict_infos["bars"].idx] = +bars[i]['Figure'];
+        //             }                  
+        //         }
+        //     }
+        // );
+
+        // d3.csv("/dataframes/nightclubs", function(error, data) {
+        //     nightclubs = data;
+        //     for(i in nightclubs){
+        //         console.log("nightclubs " + nightclubs[i]["id"] + " and " + nightclubs[i]["Figure"]);
+        //         if(+nightclubs[i]['Figure'] > maxs[dict_infos["nightclubs"].idx]){
+        //             maxs[dict_infos["nightclubs"].idx] = +nightclubs[i]['Figure'];
+        //             }                  
+        //         }
+        //     }
+        // );
+
+        // d3.csv("/dataframes/bars_percent", function(error, data) {
+        //     bars_percent = data;
+        //     for(i in bars_percent){
+        //         console.log("bars_percent " + bars_percent[i]["id"] + " and " + bars_percent[i]["Figure"]);
+        //         if(+bars_percent[i]['Figure'] > maxs[dict_infos["bars_percent"].idx]){
+        //             maxs[dict_infos["bars_percent"].idx] = +bars_percent[i]['Figure'];
+        //             }
+        //         }
+        //     }
+        // );
+
+        // d3.csv("/dataframes/arcades", function(error, data) {
+        //     arcades = data;
+        //     for(i in arcades){
+        //         console.log("arcades" + arcades[i]["id"] + " and " + arcades[i]["Figure"]);
+        //         if(+arcades[i]['Figure'] > maxs[dict_infos["arcades"].idx]){
+        //             maxs[dict_infos["arcades"].idx] = +arcades[i]['Figure'];
+        //             }
+        //         }
+        //     }
+        // );
 
 
         d3.csv("/dataframes/temps", function(error, data) {
@@ -228,6 +264,7 @@ body {
             //     }
             }
         );
+
 
         //https://github.com/johan/world.geo.json
         d3.json("/alljson", function(error, data) {
@@ -327,21 +364,29 @@ body {
             }
 
             function cityDetails(x, idx){
-                var names = ['bars', 'nightclubs', 'heritages']
+
+                console.log(dict_infos['unesco'].values);
                 console.log("max is : " + maxs);
-                var results = new Array(11).fill(0)
-                var res_value = [10, 20, 50];
+                var results = new Array(Object.keys(dict_infos).length).fill(0);
                 //d3.select("#cityData").html(function(){
                     //console.log(idx);
-                    bars.forEach(function(bar, bar_idx){
-                        if(x.id == bar.id){results[6] = bar.Figure; console.log("bars " + bar.Figure);}
-                    })
-                    nightclubs.forEach(function(night){
-                        if(x.id == night.id){results[7] = night.Figure; console.log("night " + night.Figure);}
-                    })
-                    heritage.forEach(function(heri, heri_idx){
-                        if(x.id == heri.id){results[1] = heri.Figure; console.log("heri " + heri.Figure);}
-                    })
+                    // bars.forEach(function(bar, bar_idx){
+                    //     if(x.id == bar.id){results[dict_infos["bars"].idx] = bar.Figure; console.log("bars " + dict_infos["bars"].idx);}
+                    // })
+
+                    // nightclubs.forEach(function(night){
+                    //     if(x.id == night.id){results[dict_infos["nightclubs"].idx] = night.Figure; console.log("night idx" + dict_infos["nightclubs"].idx);}
+                    // })
+                    // heritage.forEach(function(heri, heri_idx){
+                    //     if(x.id == heri.id){results[dict_infos["heritage"].idx] = heri.Figure; console.log("heri " + heri.Figure);}
+                    // })
+
+                    for (var key in dict_infos){
+                        (dict_infos[key].values).forEach(function(el, el_idx){
+                            if (x.id == el.id){ results[dict_infos[key].idx] = el.Figure;
+                                                console.log(key+ " " + el.Figure + "  " + results[dict_infos[key].idx]);}
+                        })
+                    };
 
                     // var x_axis = [];
 
@@ -361,9 +406,9 @@ body {
                          var x_temp = d3.scale.linear()
                                 .domain([0, maxs[i]])  
                                 .range([0, 200]);
-                        console.log(x_temp(d));
-                        console.log(i);
-                        console.log(maxs[i]);
+                        //console.log(x_temp(d));
+                        //console.log(i);
+                        //console.log(maxs[i]);
                         return x_temp(d) + "px"; })
                     .text(function(d, i) { return d + " " + names[i]; })
 
@@ -375,9 +420,9 @@ body {
                          var x_temp = d3.scale.linear()
                                 .domain([0, maxs[i]])  
                                 .range([0, 200]);
-                        console.log(x_temp(d));
-                        console.log(i);
-                        console.log(maxs[i]);
+                        //console.log(x_temp(d));
+                        //console.log(i);
+                        //console.log(maxs[i]);
                         return x_temp(d) + "px"; })
                     .text(function(d, i) { return d + " " + names[i]; });
                     //return results;
@@ -522,6 +567,21 @@ body {
                   return 0.2;   
              }
             });
+        }
+
+        function load_and_store(key){
+                var load_name = "/dataframes/" + key
+                console.log(load_name)
+                d3.csv(load_name, function(error, data) {
+                    var temp_data = data
+                    for(i in temp_data){
+                        console.log(key+ " " + temp_data[i]["id"] + " and " + temp_data[i]["Figure"]);
+                        if(+temp_data[i]['Figure'] > maxs[dict_infos[key].idx]){
+                            maxs[dict_infos[key].idx] = +temp_data[i]['Figure'];
+                        }
+                    }
+                    dict_infos[key].values = temp_data;
+                });          
         }
 
       </script>
