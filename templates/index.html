@@ -43,18 +43,20 @@ body {
 
 .container{
     display: flex;
+    width: 200px;
 }
 .fixed{
     width: 200px;
 }
 .flex-item{
     flex-grow: 1;
+    width: 200px;
 }
 
 </style>
 <head>
     <meta charset="utf-8">
-    <title>Skyscanner Suprise-me</title>
+    <title>Destination Advisor</title>
 
     <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="http://d3js.org/topojson.v1.min.js"></script>
@@ -78,7 +80,7 @@ body {
       <p id="report"></p>
       <p id="details"></p>
       <p id="infos"></p>
-      <p id="cost"></p>
+      
       <div id="option">
             <input name="SupriseMe" 
            type="button" 
@@ -91,6 +93,8 @@ body {
            <input type="checkbox" class="myCheckbox" value="superman"> Culture
       </div>
       <div class="chart"></div>
+      <p> Book Now :</p>
+      <p id="cost"></p>
     </div>
     <div id="map" class=flex-item> 
       <script type="text/javascript">
@@ -136,7 +140,6 @@ body {
                         'arcades':          {"idx" : 9, "values" : arcades}
                      };
 
-        //console.log("length of dict : " + Object.keys(dict_infos).length);
         var names = Object.keys(dict_infos);
         var maxs = new Array(11).fill(0); 
 
@@ -144,107 +147,6 @@ body {
             load_and_store(key);
         }
  
-        // d3.csv("/dataframes/unesco", function(error, data) {
-        //     dict_infos["unesco"].values = data;
-        //     unesco = data;
-        //     for(i in unesco){
-        //         console.log("unesco " + unesco[i]["id"] + " and " + unesco[i]["Figure"]);
-        //         if(+unesco[i]['Figure'] > maxs[dict_infos["unesco"].idx]){
-        //             maxs[dict_infos["unesco"].idx] = +unesco[i]['Figure'];
-        //             }
-        //         }
-        //     }
-        // );
-
-        // d3.csv("/dataframes/heritage", function(error, data) {
-        //     heritage = data;
-        //     for(i in heritage){
-        //         console.log("heritage " + heritage[i]["id"] + " and " + heritage[i]["Figure"]);
-        //         if(+heritage[i]['Figure'] > maxs[dict_infos["heritage"].idx]){
-        //             maxs[dict_infos["heritage"].idx] = +heritage[i]['Figure'];
-        //             }
-        //         }    
-        //     }
-        // );
-
-        // d3.csv("/dataframes/museums", function(error, data) {
-        //     museums = data;
-        //     for(i in museums){
-        //         console.log("museums " + museums[i]["id"] + " and " + museums[i]["Figure"]);
-        //         if(+museums[i]['Figure'] > maxs[dict_infos["museums"].idx]){
-        //             maxs[dict_infos["museums"].idx] = +museums[i]['Figure'];
-        //             }
-        //     }  
-        //     }
-        // );
-
-        // d3.csv("/dataframes/parks_percent", function(error, data) {
-        //     parks_percent = data;
-        //     for(i in parks_percent){
-        //         console.log("parks_percent " + parks_percent[i]["id"] + " and " + parks_percent[i]["Figure"]);
-        //         if(+parks_percent[i]['Figure'] > maxs[dict_infos["parks_percent"].idx]){
-        //             maxs[dict_infos["parks_percent"].idx] = +parks_percent[i]['Figure'];
-        //             }
-        //         }  
-        //     }
-        // );
-
-
-        // d3.csv("/dataframes/restau_per_ca", function(error, data) {
-        //     restau_per_ca = data;
-        //     for(i in restau_per_ca){
-        //         console.log("restau_per_ca " + restau_per_ca[i]["id"] + " and " + restau_per_ca[i]["Figure"]);
-        //         if(+restau_per_ca[i]['Figure'] > maxs[dict_infos["restau_per_ca"].idx]){
-        //             maxs[dict_infos["restau_per_ca"].idx] = +restau_per_ca[i]['Figure'];
-        //             }
-        //         }  
-        //     }
-        // );
-
-        // d3.csv("/dataframes/tourist_per_cent", function(error, data) {
-        //     tourist_per_cent = data;
-        //     for(i in tourist_per_cent){
-        //         console.log("tourist_per_cent " + tourist_per_cent[i]["id"] + " and " + tourist_per_cent[i]["Figure"]);
-        //         if(+tourist_per_cent[i]['Figure'] > maxs[dict_infos["tourist_per_cent"].idx]){
-        //             maxs[dict_infos["tourist_per_cent"].idx] = +tourist_per_cent[i]['Figure'];
-        //             }
-        //         }
-        //     }
-        // );
-
-        // d3.csv("/dataframes/bars", function(error, data) {
-        //     bars = data;
-        //     for(i in bars){
-        //         console.log("bars " + bars[i]["id"] + " and " + bars[i]["Figure"]);
-        //         if(+bars[i]['Figure'] > maxs[dict_infos["bars"].idx]){
-        //             maxs[dict_infos["bars"].idx] = +bars[i]['Figure'];
-        //             }                  
-        //         }
-        //     }
-        // );
-
-        // d3.csv("/dataframes/nightclubs", function(error, data) {
-        //     nightclubs = data;
-        //     for(i in nightclubs){
-        //         console.log("nightclubs " + nightclubs[i]["id"] + " and " + nightclubs[i]["Figure"]);
-        //         if(+nightclubs[i]['Figure'] > maxs[dict_infos["nightclubs"].idx]){
-        //             maxs[dict_infos["nightclubs"].idx] = +nightclubs[i]['Figure'];
-        //             }                  
-        //         }
-        //     }
-        // );
-
-        // d3.csv("/dataframes/bars_percent", function(error, data) {
-        //     bars_percent = data;
-        //     for(i in bars_percent){
-        //         console.log("bars_percent " + bars_percent[i]["id"] + " and " + bars_percent[i]["Figure"]);
-        //         if(+bars_percent[i]['Figure'] > maxs[dict_infos["bars_percent"].idx]){
-        //             maxs[dict_infos["bars_percent"].idx] = +bars_percent[i]['Figure'];
-        //             }
-        //         }
-        //     }
-        // );
-
         // d3.csv("/dataframes/arcades", function(error, data) {
         //     arcades = data;
         //     for(i in arcades){
@@ -265,7 +167,6 @@ body {
             }
         );
 
-
         //https://github.com/johan/world.geo.json
         d3.json("/alljson", function(error, data) {
             d3.csv("https://gist.githubusercontent.com/phil-pedruco/10447085/raw/426fb47f0a6793776a044f17e66d17cbbf8061ad/idCountry.csv", function(error, csv) {
@@ -280,8 +181,8 @@ body {
                 // calculate bounds, scale and transform 
                 // see http://stackoverflow.com/questions/14492284/center-a-map-in-d3-given-a-geojson-object
                 var b = path.bounds(data),
-                   s = .95 / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
-                    t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
+                        s = .95 / Math.max((b[1][0] - b[0][0]) / w, (b[1][1] - b[0][1]) / h),
+                        t = [(w - s * (b[1][0] + b[0][0])) / 2, (h - s * (b[1][1] + b[0][1])) / 2];
                 projection.scale(s)
                     .translate(t);
 
@@ -305,23 +206,10 @@ body {
                     .attr("opacity", 0.6)
                     .append("title")
                     .text(function(d) { return d.name; });
-
-                    
             });
 
             //d3.select(self.self.frameElement).style("height", height + "px");
 
-
-            function reporter(x) {
-                console.log(x)
-                d3.select("#report").text(function() {
-                    /*if(x.name == "Switzerland") {
-                    	alert("hey")
-                    }*/
-                    return x.name;
-                });
-
-            }
             function details(x) {
             	d3.select("#details").text(function() {
             		return x.name;
@@ -364,69 +252,43 @@ body {
             }
 
             function cityDetails(x, idx){
-
-                console.log(dict_infos['unesco'].values);
-                console.log("max is : " + maxs);
+                const RANGE_LENGTH = 200
                 var results = new Array(Object.keys(dict_infos).length).fill(0);
-                //d3.select("#cityData").html(function(){
-                    //console.log(idx);
-                    // bars.forEach(function(bar, bar_idx){
-                    //     if(x.id == bar.id){results[dict_infos["bars"].idx] = bar.Figure; console.log("bars " + dict_infos["bars"].idx);}
-                    // })
 
-                    // nightclubs.forEach(function(night){
-                    //     if(x.id == night.id){results[dict_infos["nightclubs"].idx] = night.Figure; console.log("night idx" + dict_infos["nightclubs"].idx);}
-                    // })
-                    // heritage.forEach(function(heri, heri_idx){
-                    //     if(x.id == heri.id){results[dict_infos["heritage"].idx] = heri.Figure; console.log("heri " + heri.Figure);}
-                    // })
+                for (var key in dict_infos){
+                    (dict_infos[key].values).forEach(function(el, el_idx){
+                        if (x.id == el.id){ results[dict_infos[key].idx] = el.Figure;
+                                            console.log(key+ " " + el.Figure + "  " + results[dict_infos[key].idx]);}
+                    })
+                };
 
-                    for (var key in dict_infos){
-                        (dict_infos[key].values).forEach(function(el, el_idx){
-                            if (x.id == el.id){ results[dict_infos[key].idx] = el.Figure;
-                                                console.log(key+ " " + el.Figure + "  " + results[dict_infos[key].idx]);}
-                        })
-                    };
+                d3.select(".chart")
+                .selectAll("div")
+                .data(results)
+                .enter().append("div")
+                .style("width", function(d, i) {  
+                     var x_temp = d3.scale.linear()
+                        .domain([0, maxs[i]])  
+                        .range([0, RANGE_LENGTH]);
+                    return x_temp(d) + "px"; 
+                })
+                .html(function(d, i) { return (+d).toFixed(3) + " <br> " + names[i]; })
 
-                    // var x_axis = [];
+                var bar_transition = d3.select(".chart")
+                                    .selectAll("div")
+                                    .data(results)
+                                    .transition();
 
-                    // for (var i = 0; i < maxs.length; i++) {
-                    // var x_temp = d3.scale.linear()
-                    //             .domain([0, d3.max(maxs[i])])
-                    //             .range([0, 200]);                        
-                    //     x_axis.push(x_temp);
-                    // }
-
-                    //console.log(results[1]);
-                    d3.select(".chart")
-                    .selectAll("div")
-                    .data(results)
-                    .enter().append("div")
-                    .style("width", function(d, i) {  
-                         var x_temp = d3.scale.linear()
-                                .domain([0, maxs[i]])  
-                                .range([0, 200]);
-                        //console.log(x_temp(d));
-                        //console.log(i);
-                        //console.log(maxs[i]);
-                        return x_temp(d) + "px"; })
-                    .text(function(d, i) { return d + " " + names[i]; })
-
-                    d3.select(".chart")
-                    .selectAll("div")
-                    .data(results)
-                    //.enter().append("div")
-                    .style("width", function(d, i) {  
-                         var x_temp = d3.scale.linear()
-                                .domain([0, maxs[i]])  
-                                .range([0, 200]);
-                        //console.log(x_temp(d));
-                        //console.log(i);
-                        //console.log(maxs[i]);
-                        return x_temp(d) + "px"; })
-                    .text(function(d, i) { return d + " " + names[i]; });
-                    //return results;
-                //});
+                bar_transition
+                .style("width", function(d, i) {  
+                     var x_temp = d3.scale.linear()
+                            .domain([0, maxs[i]])  
+                            .range([0, RANGE_LENGTH]);
+                    //console.log("here d: "+ d + " x_temp(d) : " + x_temp(d));
+                    return x_temp(d) + "px"; 
+                })
+                .duration(2000)
+                .html(function(d, i) { return (+d).toFixed(3) + " <br> " + names[i]; });
 
             }
 
@@ -497,8 +359,9 @@ body {
         function getAllIndexes(arr) {
             var indexes = [], i;
             for(i = 0; i < arr.length; i++)
-                if (arr[i] > 0)
+                if (arr[i] > 0){
                     indexes.push(i);
+                }
             return indexes;
          }
 
